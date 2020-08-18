@@ -1,20 +1,27 @@
-//sätt size på spelet
-var size = 4
-var matrix = [size]
-var solution = [size]
 
-var count = 1
-for (var i = 0; i < size; i++) {
-    solution[i] = new Array(size)
-    for (var j = 0; j < size; j++) {
-        solution[i][j] = count
-        count = count + 1
-    }
-}
+var size
+var matrix
+var solution
 
+/*
 //skickar parameter till css variabeln för antal kolumner i grid
 getComputedStyle(document.documentElement).getPropertyValue('--columnsize');
 document.documentElement.style.setProperty('--columnsize', size);
+*/
+
+
+function populateMatrix() {
+    let localMatrix = [size]
+    let count = 1
+    for (var i = 0; i < size; i++) {
+        localMatrix[i] = new Array(size)
+        for (var j = 0; j < size; j++) {
+            localMatrix[i][j] = count
+            count++
+        }
+    }
+    return localMatrix;
+}
 
 
 function gplanGone() {
@@ -30,16 +37,78 @@ function game() {
     main.appendChild(game)
 }
 
+function getValue() {
+    let input = document.getElementById("input").value;
+    let int = parseInt(input);
+    number = int;
+    console.log(int)
+    return number;
+}
 
 function render() {
-    var count = 1
+    size = getValue();
+    matrix = [size]
+
+    //skickar parameter till css variabeln för antal kolumner i grid
+    getComputedStyle(document.documentElement).getPropertyValue('--columnsize');
+    document.documentElement.style.setProperty('--columnsize', size);
+
+
+    solution = populateMatrix()
+    matrix = populateMatrix()
+
+    //shufflar loss
+    shuffle(matrix)
+    console.log(matrix)
+    //gör buttons och döper dom
     for (var i = 0; i < size; i++) {
-        matrix[i] = new Array(size)
         for (var j = 0; j < size; j++) {
-            matrix[i][j] = count
-            count = count + 1
+            if (matrix[i][j] != size * size) {
+
+                /*
+                getComputedStyle(document.documentElement).getPropertyValue('--marginal-top');
+                document.documentElement.style.setProperty('--marginal-top', 100 * i);
+
+                getComputedStyle(document.documentElement).getPropertyValue('--marginal-vanster');
+                document.documentElement.style.setProperty('--marginal-vanster', 100 * j);
+                */
+                var ruta = document.createElement('div')
+                ruta.className = "rutor";
+                ruta.style.left = 100 * j + "px"
+                ruta.style.top = 100 * i + "px"
+                ruta.id = '' + i + j
+                ruta.onclick = clicked;
+
+                //skickar till dokumentet
+                ruta.innerHTML = matrix[i][j]
+                var element = document.getElementById('spelplan')
+                element.appendChild(ruta)
+            }
+            else { //gör den tomma rutan
+                var block = document.createElement('div')
+                block.id = "space"
+                var element = document.getElementById('spelplan')
+                element.appendChild(block)
+            }
         }
     }
+}
+
+function render2() {
+    size = getValue();
+    matrix = [size]
+
+
+    //skickar parameter till css variabeln för antal kolumner i grid
+    getComputedStyle(document.documentElement).getPropertyValue('--columnsize');
+    document.documentElement.style.setProperty('--columnsize', size);
+
+
+
+
+
+    solution = populateMatrix()
+    matrix = populateMatrix()
 
     //shufflar loss
     shuffle(matrix)
@@ -57,9 +126,8 @@ function render() {
                 block.innerHTML = matrix[i][j]
                 var element = document.getElementById('game')
                 element.appendChild(block)
-
-                //gör den tomma rutan
-            } else {
+            }
+            else { //gör den tomma rutan
                 var block = document.createElement('div')
                 block.id = "space"
                 var element = document.getElementById('game')
@@ -67,6 +135,13 @@ function render() {
             }
         }
     }
+    var ruta = document.createElement('div');
+    ruta.className = "rutor"
+    ruta.id = "ruta1"
+    console.log(ruta)
+    var spel = document.getElementById("spelplan");
+    console.log(spel)
+    spel.appendChild(ruta)
 }
 
 
@@ -93,8 +168,9 @@ function shuffle(matrix) {
 
 
 function clicked() {
-    var y = parseInt(this.id[0])
-    var x = parseInt(this.id[1])
+
+    let y = parseInt(this.id[0])
+    let x = parseInt(this.id[1])
 
     // Kontrollerar att indexet +/- 1 är inom matrisens ramar (inte out of bounds/undefined).
     // Kontrollerar ifall den tomma rutan (size*size) är inill någon av dom 4 riktingarna
@@ -102,19 +178,15 @@ function clicked() {
 
     if ((y + 1 <= size - 1) && (matrix[y + 1][x] == size * size)) {
         swap(y, x, y + 1, x)
-        console.log('under')
 
     } else if ((y - 1 >= 0) && (matrix[y - 1][x] == size * size)) {
         swap(y, x, y - 1, x)
-        console.log('ovanför')
 
     } else if ((x + 1 <= size - 1) && (matrix[y][x + 1] == size * size)) {
         swap(y, x, y, x + 1)
-        console.log('till höger')
 
     } else if ((x - 1 >= 0) && (matrix[y][x - 1] == size * size)) {
         swap(y, x, y, x - 1)
-        console.log('till vänster')
     }
 }
 
@@ -124,8 +196,8 @@ function swap(index_A, index_B, index_C, index_D) {
     matrix[index_A][index_B] = matrix[index_C][index_D]
     matrix[index_C][index_D] = temp
 
-    kill()
-    updateRender(solution)
+
+    updateRender()
 }
 
 
@@ -137,28 +209,43 @@ function kill() {
 }
 
 
-function updateRender(x) {
+function isEqual(matA, matB) {
     for (var i = 0; i < size; i++) {
         for (var j = 0; j < size; j++) {
-            if (matrix[i][j] != size * size) {
-                var block = document.createElement('button')
-                block.id = '' + i + j
-                block.className = "buttons";
-                block.onclick = clicked
-
-                block.innerHTML = matrix[i][j]
-                var element = document.getElementById('game')
-                element.appendChild(block)
-            }
-            else {
-                var block = document.createElement('div')
-                block.id = 'space'
-                var element = document.getElementById('game')
-                element.appendChild(block)
+            if (matA[i][j] != matB[i][j]) {
+                return false
             }
         }
     }
-    if (matrix != solution) {
+    return true
+}
+
+function updateRender() {
+
+    /*
+        for (var i = 0; i < size; i++) {
+            for (var j = 0; j < size; j++) {
+                if (matrix[i][j] != size * size) {
+                    var block = document.createElement('button')
+                    block.id = '' + i + j
+                    block.className = "buttons";
+                    block.onclick = clicked
+    
+                    block.innerHTML = matrix[i][j]
+                    var element = document.getElementById('game')
+                    element.appendChild(block)
+                }
+                else {
+                    var block = document.createElement('div')
+                    block.id = 'space'
+                    var element = document.getElementById('game')
+                    element.appendChild(block)
+                }
+            }
+    
+        }
+    */
+    if (isEqual(matrix, solution)) {
 
         var modal = document.getElementById("gameComplete");
 
@@ -179,10 +266,5 @@ function updateRender(x) {
             }
         }
     }
+
 }
-
-
-//Skriv beskrivande kommentar över alla funktoner
-//Gör funktion av populateMatrix
-//Fundera över om alla variabelnamn är beskrivande (tänker mest på "modal" i solution-ifet)
-//Göra size valbar med input..? Gick det?

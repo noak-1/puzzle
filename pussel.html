@@ -11,9 +11,10 @@
 
 <body>
     <div id="main">
-        <button id="render">SHUFFLE</button>
+        <input id="input" type="number" min="2" max="6" value="4" id="input">
+        <button id="shuffle-button">SHUFFLE</button>
+        <div id="spelplan"></div>
     </div>
-
 
     <div id="gameComplete" class="modal">
         <div class="modal-content">
@@ -27,9 +28,9 @@
         addEventListener('load', game);
         addEventListener("load", render);
         //document.getElementById("inmatning").addEventListener("click", input);
-        document.getElementById("render").addEventListener("click", gplanGone);
-        document.getElementById("render").addEventListener("click", game);
-        document.getElementById("render").addEventListener("click", render);
+        document.getElementById("shuffle-button").addEventListener("click", gplanGone);
+        document.getElementById("shuffle-button").addEventListener("click", game);
+        document.getElementById("shuffle-button").addEventListener("click", render);
     </script>
 </body>
 
