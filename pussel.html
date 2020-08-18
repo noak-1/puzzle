@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>NOAKS PUZZLE</title>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="pussel.js"></script>
+    <link rel="stylesheet" type="text/css" href="pussel.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
+</head>
+
+<body>
+    <div id="main">
+        <button id="render">SHUFFLE</button>
+    </div>
+
+
+    <div id="gameComplete" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Congratulations, you won!! I love you!</p>
+        </div>
+
+    </div>
+
+    <script>
+        addEventListener('load', game);
+        addEventListener("load", render);
+        //document.getElementById("inmatning").addEventListener("click", input);
+        document.getElementById("render").addEventListener("click", gplanGone);
+        document.getElementById("render").addEventListener("click", game);
+        document.getElementById("render").addEventListener("click", render);
+    </script>
+</body>
+
+</html>
