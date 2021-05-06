@@ -1,14 +1,10 @@
 {
-  "name": "n_puzzle",
+  "name": "n-puzzle",
   "version": "1.0.0",
   "description": "Puzzle",
   "main": "index.js",
   "scripts": {
     "sass": "sass --watch ./sass/main.scss:./assets/css/style.css"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/nokia13/noaks-pussel.git"
   },
   "author": "",
   "license": "ISC",
