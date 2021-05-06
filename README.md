@@ -1,6 +1,6 @@
 # puzzle
 
-Hi!
+Hi! <br />
 I made a puzzle in javascript and used some css/sass. <br />
 Feel welcome to give me a hint how to make this puzzle browser responsive. 💪
 
