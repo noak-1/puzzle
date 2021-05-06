@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <title>N(oak)-Puzzle</title>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="assets/js/pussel.js"></script>
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
+
+</head>
+
+<body>
+
+    <div id="main">
+
+        <div class="container">
+            
+            <div class="options-container">
+                <input id="input" type="number" min="2" max="6" value="4" id="input">
+                <button id="shuffle-button">SHUFFLE</button>
+            </div>
+            <div id="plan">
+                <div id="gameplan"></div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <div id="gameComplete" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Congratulations, you did it!✨</p>
+        </div>
+
+    </div>
+
+    <script>
+
+        
+
+        //addEventListener('load', game);
+        addEventListener("load", render);
+        //document.getElementById("inmatning").addEventListener("click", input);
+        //document.getElementById("shuffle-button").addEventListener("click", gplanGone);
+        //document.getElementById("shuffle-button").addEventListener("click", game);
+        document.getElementById("shuffle-button").addEventListener("click", shuffleBoard);
+
+      
+        
+        var container_width = document.getElementById("gameplan").clientWidth;
+        console.log(container_width);
+
+    </script>
+    
+</body>
+
+</html>
